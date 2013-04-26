@@ -6,15 +6,15 @@
 ( Settings from pcb-machine.h )
 ( tool size = 0.0080 )
 ( z high = 0.5000	z up = 0.1000	z down = -0.0100 )
-( drill depth = -0.0700 )
+( drill depth = -0.0750 )
 ( spindle on time = 3.0000 )
-( milling depth = -0.0700 )
+( milling depth = -0.0750 )
 ( tool change at X0.0000, Y0.0000, Z5.0000 )
-( feed rate = 10.0000	feed rate z = 5.0000 )
+( feed rate = 10.0000	feed rate z = 3.0000 )
 
 ( Settings from pcb-defaults.h )
 ( Default isolate = 0.0001 )
-( isolate max = 0.0200 )
+( isolate max = 0.0100 )
 ( isolate step = 0.0050 )
 ( Generated: bottom outlines, bottom drill,  )
 ( Unit of measure: inch )
@@ -31,7 +31,7 @@ G00 X0.0000 Y0.0000 Z5.0000
 G00 Z0.1000 
 M03
 G04 P3.000000
-G82 X-1.3250 Y1.2800 Z-0.0700 F5.00  R0.1000 P0.100000
+G82 X-1.3250 Y1.2800 Z-0.0750 F3.00  R0.1000 P0.100000
 G82 X-1.3250 Y1.6800 
 G82 X-1.6510 Y1.5490 
 G82 X-1.6510 Y1.9490 
@@ -52,7 +52,7 @@ G00 X0.0000 Y0.0000 Z5.0000
 G00 Z0.1000 
 M03
 G04 P3.000000
-G82 X-1.4500 Y0.2166 Z-0.0700 F5.00  R0.1000 P0.100000
+G82 X-1.4500 Y0.2166 Z-0.0750 F3.00  R0.1000 P0.100000
 G82 X-1.4500 Y0.3150 
 G82 X-1.4500 Y0.4134 
 G82 X-1.6640 Y2.1176 
@@ -115,7 +115,7 @@ G00 X0.0000 Y0.0000 Z5.0000
 G00 Z0.1000 
 M03
 G04 P3.000000
-G82 X-1.8247 Y2.6900 Z-0.0700 F5.00  R0.1000 P0.100000
+G82 X-1.8247 Y2.6900 Z-0.0750 F3.00  R0.1000 P0.100000
 G82 X-2.0216 Y2.6900 
 G82 X-2.2184 Y2.6900 
 G82 X-2.4153 Y2.6900 
