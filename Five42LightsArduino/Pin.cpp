@@ -1,10 +1,11 @@
 #include "Pin.h"
 
-Pin::Pin(unsigned short pNum, unsigned char onVal, unsigned char offVal, unsigned int period){
+Pin::Pin(unsigned short pNum, unsigned char onVal, unsigned char offVal, unsigned int updatePeriod, unsigned char stepVal){
   (*this).setOnOffValue(onVal, offVal);
-  (*this).setPeriod(period);
+  (*this).setStepValue(stepVal);
+  (*this).setUpdatePeriod(updatePeriod);
   (*this).setPinNumber(pNum);
-  _currentState = false;
+  _currentValue = 0;
   _lastUpdate = millis();
 }
 
@@ -12,7 +13,7 @@ void Pin::setPinNumber(unsigned short pNum){
   // TODO: check if pin number is valid pwm pin
   _pinNumber = pNum;
   pinMode(_pinNumber, OUTPUT);
-  analogWrite(_pinNumber, _currentState);    
+  analogWrite(_pinNumber, _currentValue);    
 }
 
 void Pin::setOnValue(unsigned char onVal){
@@ -26,16 +27,24 @@ void Pin::setOnOffValue(unsigned char onVal, unsigned char offVal){
   _offValue = offVal;
 }
 
-void Pin::setPeriod(unsigned int period){
-  _period = period;
+void Pin::setStepValue(unsigned char stepVal){
+  _stepValue = stepVal;
+}
+void Pin::setUpdatePeriod(unsigned int period){
+  _updatePeriod = period;
 }
 
 void Pin::update(){
-  if((millis() - _lastUpdate) > _period){
-    _currentState = !_currentState;
-    analogWrite(_pinNumber, _currentState?(_onValue):(_offValue));
+  if((millis() - _lastUpdate) > _updatePeriod){
+    _currentValue += _stepValue;
+    if(_currentValue > _onValue){
+      _currentValue = -(_onValue);
+    }
+    else if(abs(_currentValue) < _offValue){
+      _currentValue = _offValue;
+    }
+    analogWrite(_pinNumber, abs(_currentValue));
     _lastUpdate = millis();
   }
 }
-
 
