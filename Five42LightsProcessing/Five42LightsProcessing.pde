@@ -1,14 +1,27 @@
 import processing.serial.*;
 
-Serial mBT;
+Serial mBT = null;
 PImage colorPalette; 
 
 void setup() {
   size(640, 480);
+
+  // serial-ness
   String[] serialList = Serial.list();
+
   // look for candidate
-  // connect  
-  //mBT = new Serial(this, Serial.list()[4], 57600);
+  String btCand = "";
+  for (int i=0; i<serialList.length; ++i) {
+    if ((serialList[i].toLowerCase().contains("tty")) && (serialList[i].toLowerCase().contains("rn42"))) {
+      btCand = serialList[i];
+      break;
+    }
+  }
+  // see if candidate
+  if (!btCand.equals("")) {
+    println("Trying to connect to: "+btCand);
+    mBT = new Serial(this, btCand, 57600);
+  }
 
   // create color map/palette
   colorMode(HSB, 1.0, 1.0, 1.0, 255.0);
@@ -42,5 +55,18 @@ void mouseReleased() {
   color pickedColor = color(H*1.0, 2.0*S/LS, LS);
   println("HSB: "+hue(pickedColor)+" "+saturation(pickedColor)+" "+brightness(pickedColor));
   println("RGB: "+red(pickedColor)+" "+green(pickedColor)+" "+blue(pickedColor));
+
+  int R = int(red(pickedColor)*255.0)&0xff;
+  int G = int(green(pickedColor)*255.0)&0xff;
+  int B = int(blue(pickedColor)*255.0)&0xff;
+
+  if (mBT != null) {
+    mBT.write('R');
+    mBT.write(char(R));
+    mBT.write('G');
+    mBT.write(char(G));
+    mBT.write('B');
+    mBT.write(char(B));
+  }
 }
 
