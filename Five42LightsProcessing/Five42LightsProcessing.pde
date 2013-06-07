@@ -12,9 +12,13 @@ void setup() {
   // look for candidate
   String btCand = "";
   for (int i=0; i<serialList.length; ++i) {
-    if ((serialList[i].toLowerCase().contains("tty")) && (serialList[i].toLowerCase().contains("rn42"))) {
-      btCand = serialList[i];
-      break;
+    if (serialList[i].toLowerCase().contains("tty")) {
+      if ((serialList[i].toLowerCase().contains("rn42")) 
+        || (serialList[i].toLowerCase().contains("usbmodem")) 
+        || (serialList[i].toLowerCase().contains("usbserial"))) {
+        btCand = serialList[i];
+        break;
+      }
     }
   }
   // see if candidate
