@@ -53,11 +53,13 @@ void loop(){
     }
   }
 
-  if((debugMode) && (millis()-rgbt > 500)){
-    rgbv = (rgbv+1)%8;
-    digitalWrite(RED, (rgbv>>0)&0x1);
-    digitalWrite(GREEN, (rgbv>>1)&0x1);
-    digitalWrite(BLUE, (rgbv>>2)&0x1);
+  if((debugMode) && (millis()-rgbt > 10)){
+    rgbv = (rgbv+1)%256;
+    uint32_t mrgb = Wheel((uint32_t)rgbv);
+
+    analogWrite(RED, (mrgb>>16)&0xff);
+    analogWrite(GREEN, (mrgb>>8)&0xff);
+    analogWrite(BLUE, (mrgb>>0)&0xff);
     rgbt = millis();
   }
   else if(!debugMode){
@@ -66,8 +68,6 @@ void loop(){
     analogWrite(BLUE, RGB[2]);
   }
 
-
-
   if(millis()-wt > 8){
     wv += 8;
     wv = (wv>255)?(-255):(wv);    
@@ -75,7 +75,20 @@ void loop(){
     //analogWrite(WHITE_RIGHT, abs(wv));
     wt = millis();
   }
+}
 
+uint32_t Wheel(uint32_t WheelPos) {
+  if(WheelPos < 85) {
+    return (((3*WheelPos)<<16)&0xff0000) | (((255 - 3*WheelPos)<<8)&0xff00);
+  } 
+  else if(WheelPos < 170) {
+    WheelPos -= 85;
+    return (((255 - 3*WheelPos)<<16)&0xff0000) | ((3*WheelPos)&0xff);
+  } 
+  else {
+    WheelPos -= 170;
+    return (((3*WheelPos)<<8)&0xff00) | ((255 - 3*WheelPos)&0xff);
+  }
 }
 
 
