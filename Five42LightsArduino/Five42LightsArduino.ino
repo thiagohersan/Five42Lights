@@ -36,20 +36,17 @@ void loop(){
   while(Serial.available() > 1){
     char c = Serial.read();
     int b = Serial.read();
+
+    debugMode = ((c == 'D') || (c == 'd'));
+
     if((c == 'R') || (c == 'r')){
-      debugMode = false;
       RGB[0] = b&0xff;
     }
     else if((c == 'G') || (c == 'g')){
-      debugMode = false;
       RGB[1] = b&0xff;
     }
     else if((c == 'B') || (c == 'b')){
-      debugMode = false;
       RGB[2] = b&0xff;
-    }
-    else if((c == 'D') || (c == 'd')){
-      debugMode = true;
     }
   }
 
