@@ -14,7 +14,8 @@ void setup() {
   for (int i=0; i<serialList.length; ++i) {
     if (serialList[i].toLowerCase().contains("tty")) {
       if ((serialList[i].toLowerCase().contains("rn42")) 
-        || (serialList[i].toLowerCase().contains("usbmodem")) 
+        || (serialList[i].toLowerCase().contains("usbmodem"))
+        || (serialList[i].toLowerCase().contains("ive42")) 
         || (serialList[i].toLowerCase().contains("usbserial"))) {
         btCand = serialList[i];
         break;
